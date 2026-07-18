@@ -1,0 +1,36 @@
+/* ============================================================
+   打印 / 另存 PDF 样式（A4）
+   隐藏导航与操作按钮，避免图表被切断。
+   ============================================================ */
+@page{ size:A4; margin:14mm; }
+
+@media print{
+  html,body{ background:#fff !important; color:#000; font-size:12pt; }
+  .no-print, .site-header, .site-footer, .report-actions, .lang-switch, .modal-overlay{ display:none !important; }
+
+  main.container{ max-width:100%; padding:0; }
+  .card{
+    box-shadow:none !important; border:1px solid #ddd; border-radius:8px;
+    padding:14px; margin-bottom:12px;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .report-head{ background:#fff !important; }
+
+  /* 图表容器不被跨页切断 */
+  .charts, .chart-box, canvas, .style-summary, .report-lead,
+  .report-section, .sales-block, .sellto-card{
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  canvas{ max-width:320px !important; height:auto !important; }
+
+  /* 每个主要模块另起页更整洁（可按需调整） */
+  #r-primary-report, #r-combo-report, .sales-module{
+    page-break-before:auto;
+  }
+
+  a{ color:#000; text-decoration:none; }
+  .rs-num{ background:#000 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .score-fill, .style-badge, .report-lead, .sellto-card, .sales-module{
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>统计 · MCEO DISC Admin</title>
+<link rel="icon" href="/assets/images/logo.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+  body{background:var(--grey)}
+  .admin-wrap{max-width:760px;margin:0 auto;padding:24px 18px}
+  .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
+  @media(min-width:640px){.stat-grid{grid-template-columns:repeat(4,1fr)}}
+  .stat-card{background:#fff;border:1px solid var(--grey-line);border-radius:14px;padding:16px;text-align:center}
+  .stat-num{font-size:1.7rem;font-weight:800}
+  .stat-label{color:var(--text-soft);font-size:.8rem;margin-top:4px}
+  .dist-row{display:grid;grid-template-columns:28px 1fr 96px;align-items:center;gap:10px;margin-bottom:8px}
+  .dist-key{font-weight:800}
+  .dist-bar{background:var(--grey);height:14px;border-radius:999px;overflow:hidden}
+  .dist-bar span{display:block;height:100%;border-radius:999px}
+  .dist-val{text-align:right;font-size:.85rem;color:var(--text-soft)}
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--grey-line)}
+  .hint{background:var(--cream);border-left:4px solid var(--mceo-orange);border-radius:10px;padding:12px 14px;font-size:.9rem;color:var(--text-soft)}
+</style>
+</head>
+<body>
+<div class="admin-wrap">
+  <h1 style="color:var(--mceo-orange)">MCEO DISC · 统计后台 Stats</h1>
+
+  <section id="login" class="card">
+    <p class="muted small">输入后台密码查看统计。Enter the admin password to view stats.</p>
+    <div class="field"><label>密码 Password</label><input type="password" id="pw" autocomplete="current-password"></div>
+    <p class="err" id="err"></p>
+    <button class="btn btn-primary btn-lg" id="btn-login">查看统计 View Stats</button>
+  </section>
+
+  <section id="dash" hidden>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num" id="s-total">0</div><div class="stat-label">总测试 Total</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-completed">0</div><div class="stat-label">已完成 Completed</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-incomplete">0</div><div class="stat-label">未完成 Incomplete</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-lang">0 / 0</div><div class="stat-label">中文 / English</div></div>
+    </div>
+    <div class="card">
+      <h2 class="section-h">主要类型分布 Primary Style</h2>
+      <div id="primary-dist"></div>
+    </div>
+    <div class="card">
+      <h2 class="section-h">组合类型 Combination</h2>
+      <table><thead><tr><th>组合 Type</th><th>人数 Count</th></tr></thead><tbody id="combo-body"></tbody></table>
+    </div>
+    <div class="card hint">
+      查看单条记录、筛选、导出 CSV：请到 <strong>Supabase → Table Editor</strong> 打开 <code>assessment_scores</code> /
+      <code>respondents</code> 等表，Supabase 自带筛选与「Export to CSV」。<br>
+      View individual records, filter and export CSV in <strong>Supabase → Table Editor</strong> (built-in CSV export).
+    </div>
+  </section>
+</div>
+
+<script>
+var COLORS = { D:'#E23D3D', I:'#F5B301', S:'#2E9E5B', C:'#2F6BD6' };
+function pct(n,d){ return d>0 ? Math.round(n/d*100) : 0; }
+function login(){
+  var pw = document.getElementById('pw').value;
+  var err = document.getElementById('err'); err.textContent='';
+  var btn = document.getElementById('btn-login'); btn.disabled=true; btn.textContent='...';
+  fetch('/api/admin-stats',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      btn.disabled=false; btn.textContent='查看统计 View Stats';
+      if(!d||!d.ok){ err.textContent=(d&&d.error)?d.error:'出错了 / Error'; return; }
+      render(d.stats);
+    })
+    .catch(function(){ btn.disabled=false; btn.textContent='查看统计 View Stats'; err.textContent='网络错误 / Network error'; });
+}
+function render(s){
+  document.getElementById('login').hidden=true;
+  document.getElementById('dash').hidden=false;
+  document.getElementById('s-total').textContent=s.total||0;
+  document.getElementById('s-completed').textContent=s.completed||0;
+  document.getElementById('s-incomplete').textContent=s.incomplete||0;
+  document.getElementById('s-lang').textContent=(s.zh||0)+' / '+(s.en||0);
+  var comp=s.completed||0;
+  var pd=document.getElementById('primary-dist'); pd.innerHTML='';
+  ['D','I','S','C'].forEach(function(k){
+    var c=(s.primary&&s.primary[k])?s.primary[k]:0;
+    var row=document.createElement('div'); row.className='dist-row';
+    row.innerHTML='<span class="dist-key" style="color:'+COLORS[k]+'">'+k+'</span>'+
+      '<span class="dist-bar"><span style="width:'+pct(c,comp)+'%;background:'+COLORS[k]+'"></span></span>'+
+      '<span class="dist-val">'+c+' ('+pct(c,comp)+'%)</span>';
+    pd.appendChild(row);
+  });
+  var tb=document.getElementById('combo-body'); tb.innerHTML='';
+  (s.combo||[]).forEach(function(item){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+item.type+'</td><td>'+item.count+'</td>';
+    tb.appendChild(tr);
+  });
+  if(!(s.combo||[]).length){ tb.innerHTML='<tr><td colspan="2" class="muted">暂无数据 No data</td></tr>'; }
+}
+document.getElementById('btn-login').addEventListener('click', login);
+document.getElementById('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') login(); });
+</script>
+</body>
+</html>

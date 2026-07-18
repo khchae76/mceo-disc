@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MCEO DISC 成交沟通测评™</title>
+<link rel="icon" href="/assets/images/logo.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/print.css" media="print">
+</head>
+<body class="page-assessment">
+<header class="site-header no-print">
+  <div class="container header-inner">
+    <a class="brand" href="/"><span class="brand-mark">MCEO</span><span class="brand-sub" data-i18n="assessment_name">MCEO DISC 成交沟通测评™</span></a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="zh" aria-pressed="true">中文</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+</header>
+<main class="container">
+
+  <!-- Screen A: 基本资料 -->
+  <section id="screen-info" class="card screen">
+    <h1 class="section-h" data-i18n="info_title"></h1>
+    <p class="muted" data-i18n="info_subtitle"></p>
+    <form id="info-form" novalidate>
+      <div class="field"><label data-i18n="field_name"></label><input type="text" name="name" autocomplete="name" maxlength="120" required><small class="err" data-err="name"></small></div>
+      <div class="field"><label data-i18n="field_email"></label><input type="email" name="email" autocomplete="email" maxlength="190" required><small class="err" data-err="email"></small></div>
+      <div class="field"><label data-i18n="field_whatsapp"></label><input type="text" name="whatsapp" inputmode="tel" maxlength="40" required><small class="err" data-err="whatsapp"></small></div>
+      <div class="field"><label data-i18n="field_company"></label><input type="text" name="company" maxlength="150"></div>
+      <div class="field"><label data-i18n="field_industry"></label><input type="text" name="industry" maxlength="120"></div>
+      <div class="field">
+        <label data-i18n="field_role"></label>
+        <select name="role" required>
+          <option value="" data-i18n="field_role"></option>
+          <option value="owner" data-i18n="role_owner"></option>
+          <option value="sales" data-i18n="role_sales"></option>
+          <option value="manager" data-i18n="role_manager"></option>
+          <option value="team" data-i18n="role_team"></option>
+          <option value="other" data-i18n="role_other"></option>
+        </select>
+        <small class="err" data-err="role"></small>
+      </div>
+      <div class="field field-consent">
+        <label class="checkbox"><input type="checkbox" name="consent" value="1"><span data-i18n="consent_label"></span></label>
+        <small class="err" data-err="consent"></small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" data-i18n="btn_continue">继续</button>
+    </form>
+  </section>
+
+  <!-- Screen B: 答题 -->
+  <section id="screen-quiz" class="card screen" hidden>
+    <div class="progress-wrap">
+      <div class="progress-label" id="q-progress"></div>
+      <div class="progress-bar"><div class="progress-fill" id="q-progress-fill"></div></div>
+    </div>
+    <h2 class="q-scenario" id="q-scenario"></h2>
+    <p class="muted help-pick" data-i18n="help_pick"></p>
+    <div class="choice-head"><span class="choice-col-most" data-i18n="col_most"></span><span class="choice-col-least" data-i18n="col_least"></span></div>
+    <div id="q-options" class="q-options"></div>
+    <p class="err quiz-err" id="quiz-err" role="alert"></p>
+    <div class="quiz-nav">
+      <button type="button" class="btn btn-ghost" id="btn-prev" data-i18n="btn_prev"></button>
+      <button type="button" class="btn btn-outline" id="btn-restart" data-i18n="btn_restart"></button>
+      <button type="button" class="btn btn-primary" id="btn-next" data-i18n="btn_next"></button>
+    </div>
+  </section>
+
+  <!-- Screen C: 确认 -->
+  <section id="screen-confirm" class="card screen" hidden>
+    <h1 class="section-h" data-i18n="confirm_title"></h1>
+    <p data-i18n="confirm_body"></p>
+    <p class="err" id="confirm-err" role="alert"></p>
+    <div class="quiz-nav">
+      <button type="button" class="btn btn-ghost" id="btn-back-check" data-i18n="btn_back_check"></button>
+      <button type="button" class="btn btn-primary btn-lg" id="btn-submit" data-i18n="btn_submit"></button>
+    </div>
+  </section>
+
+</main>
+<footer class="site-footer no-print">
+  <div class="container footer-inner">
+    <div class="footer-links"><a href="/privacy" data-i18n="footer_privacy">隐私声明</a><span>·</span><a href="/terms" data-i18n="footer_terms">使用条款</a></div>
+    <p class="footer-copy">© <span data-year>2026</span> MCEO · <span data-i18n="footer_rights">版权所有</span></p>
+    <p class="footer-disclaimer" data-i18n="result_disclaimer"></p>
+  </div>
+</footer>
+<script src="/assets/js/i18n.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/assessment.js"></script>
+</body>
+</html>

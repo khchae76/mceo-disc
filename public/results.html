@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>DISC 报告 · MCEO</title>
+<link rel="icon" href="/assets/images/logo.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/print.css" media="print">
+</head>
+<body class="page-results">
+<header class="site-header no-print">
+  <div class="container header-inner">
+    <a class="brand" href="/"><span class="brand-mark">MCEO</span><span class="brand-sub" data-i18n="assessment_name">MCEO DISC 成交沟通测评™</span></a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="zh" aria-pressed="true">中文</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+</header>
+<main class="container">
+
+  <section id="report-notfound" class="card" hidden>
+    <h1 class="section-h" data-i18n="not_found"></h1>
+    <p data-err-msg></p>
+    <a href="/" class="btn btn-primary" data-i18n="btn_start"></a>
+  </section>
+
+  <article id="report" class="report" hidden>
+    <section class="card report-head">
+      <div class="report-brand">MCEO</div>
+      <h1 class="report-title" data-i18n="result_title"></h1>
+      <div class="report-meta">
+        <span><strong data-i18n="result_for"></strong>: <span id="r-name"></span></span>
+        <span><strong data-i18n="result_date"></strong>: <span id="r-date"></span></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="style-summary">
+        <div class="style-badge" id="r-primary-badge">
+          <span class="style-cap" data-i18n="result_primary"></span>
+          <span class="style-letter" id="r-primary-letter"></span>
+          <span class="style-name" id="r-primary-name"></span>
+        </div>
+        <div class="style-badge" id="r-secondary-badge">
+          <span class="style-cap" data-i18n="result_secondary"></span>
+          <span class="style-letter" id="r-secondary-letter"></span>
+          <span class="style-name" id="r-secondary-name"></span>
+        </div>
+        <div class="style-badge combo" id="r-combo-badge">
+          <span class="style-cap" data-i18n="result_combination"></span>
+          <span class="style-name" id="r-combo-name"></span>
+          <span class="dual-note" id="r-dual-note" hidden data-i18n="result_dual_note"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-h" data-i18n="result_scores_title"></h2>
+      <div class="charts">
+        <div class="chart-box"><h3 class="chart-h" data-i18n="chart_radar_title"></h3><canvas id="radarChart" width="360" height="360" role="img" aria-label="DISC radar"></canvas></div>
+        <div class="chart-box"><h3 class="chart-h" data-i18n="chart_bar_title"></h3><canvas id="barChart" width="360" height="360" role="img" aria-label="DISC bar"></canvas></div>
+      </div>
+      <div id="r-score-table" class="score-table"></div>
+      <p class="muted small" data-i18n="result_intensity_note"></p>
+    </section>
+
+    <section class="card" id="r-primary-report"></section>
+    <section class="card" id="r-combo-report"></section>
+    <section class="card sales-module" id="r-sales-module"></section>
+
+    <section class="card disclaimer-card"><p class="muted small" data-i18n="result_disclaimer"></p></section>
+
+    <section class="card no-print report-actions">
+      <button type="button" class="btn btn-primary" onclick="window.print()" data-i18n="btn_print"></button>
+      <a href="/" class="btn btn-outline" data-i18n="btn_restart"></a>
+      <p class="muted small" data-i18n="print_hint"></p>
+    </section>
+  </article>
+
+</main>
+<footer class="site-footer no-print">
+  <div class="container footer-inner">
+    <div class="footer-links"><a href="/privacy" data-i18n="footer_privacy">隐私声明</a><span>·</span><a href="/terms" data-i18n="footer_terms">使用条款</a></div>
+    <p class="footer-copy">© <span data-year>2026</span> MCEO · <span data-i18n="footer_rights">版权所有</span></p>
+    <p class="footer-disclaimer" data-i18n="result_disclaimer"></p>
+  </div>
+</footer>
+<script src="/assets/js/i18n.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/vendor/chart.min.js"></script>
+<script src="/assets/js/results.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "mceo-disc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MCEO DISC Sales & Communication Profile — Vercel + Supabase",
+  "engines": { "node": ">=18" }
+}
