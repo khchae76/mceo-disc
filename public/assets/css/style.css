@@ -41,8 +41,9 @@ a:hover{text-decoration:underline}
 /* ---- Header ---- */
 .site-header{background:var(--white);border-bottom:1px solid var(--grey-line);position:sticky;top:0;z-index:50}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;max-width:var(--maxw);margin:0 auto}
-.brand{display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
+.brand{display:flex;flex-direction:row;align-items:center;gap:.6rem;line-height:1.1;text-decoration:none}
 .brand:hover{text-decoration:none}
+.brand-logo{height:40px;width:auto;display:block}
 .brand-mark{font-weight:800;letter-spacing:.5px;color:var(--mceo-orange);font-size:1.15rem}
 .brand-sub{font-size:.7rem;color:var(--text-soft);max-width:200px}
 .lang-switch{display:flex;background:var(--grey);border-radius:999px;padding:3px}
